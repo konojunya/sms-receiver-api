@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SMS Receiver API Demo</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@3.1.1/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@3.1.1/dist/material-components-web.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="origin-trial" content="AtEy53eGk+lMbT0pjUsjPHrTUyJcm542r/2nlLk7JsYZScitZjrufvwQMVg78JUYd4KCvgzekcBrtf0WmAQiAAkAAABneyJvcmlnaW4iOiJodHRwczovL3Ntcy1qai5uZ3Jvay5pbzo0NDMiLCJmZWF0dXJlIjoiU21zUmVjZWl2ZXIiLCJleHBpcnkiOjE1NzY1NzcyMzIsImlzU3ViZG9tYWluIjp0cnVlfQ==">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body class="mdc-typography">
+    <header class="mdc-top-app-bar">
+      <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+          <h1 class="mdc-top-app-bar__title">
+            SMS Receiver API Demo
+          </h1>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+          <button id="install"
+                  class="mdc-icon-button material-icons mdc-top-app-bar__action-item mdc-ripple-upgraded--unbounded mdc-ripple-upgraded invisible">
+            add_to_home_screen
+          </button>
+        </section>
+      </div>
+      <div role="progressbar" class="mdc-linear-progress">
+        <div class="mdc-linear-progress__buffering-dots"></div>
+        <div class="mdc-linear-progress__buffer"></div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+          <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+          <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+      </div>
+    </header>
+    <main class="content mdc-top-app-bar--fixed-adjust">
+      <form id="phone-form" class="visible mdc-form-field mdc-form-field--align-end" action="/send" method="POST">
+        <div>
+          <p id="unsupported" class="invisible red">
+            Your browser does not support SMS Receiver API. To try out the API,
+            use Google Chrome 78 or later and enable chrome://flags/#enable-experimental-web-platform-features.
+          </p>
+        </div>
+        <h2>Select your browser, send following SMS message to this phone from another one after pressing "Verify".</h2>
+        <div class="mdc-select">
+          <i class="mdc-select__dropdown-icon"></i>
+          <select class="mdc-select__native-control">
+            <option value="{{AppHash.beta}}">Chrome Beta</option>
+            <option value="{{AppHash.stable}}" selected>Chrome Stable</option>
+          </select>
+          <label class="mdc-floating-label">Pick your browser</label>
+          <div class="mdc-line-ripple"></div>
+        </div>
+        <pre id="message"></pre>
+        <div>
+          <input type="button" id="copy" class="mdc-button" value="Copy" />
+          <input type="button" id="verify" class="mdc-button mdc-button--raised" value="Verify" />          
+        </div>
+      </form>
+      <form id="otp-form" class="mdc-form-field mdc-form-field--align-end" action="/resend" method="POST">
+        <h2>Verify your phone number</h2>
+        <p>
+          Enter the 6-digit we sent to
+          <span id="phone-number"></span>
+        </p>
+        <div id="otp-field" class="mdc-text-field">
+          <input type="number"
+                 id="otp-input"
+                 class="mdc-text-field__input"
+                 autocomplete="one-time-code"
+                 pattern="^([0-9]+)$"
+                 required/>
+          <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+              <label for="otp-input" class="mdc-floating-label">6-digit code</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+          </div>
+        </div>
+        <div class="align-to-right">
+          <input type="button" id="cancel" class="mdc-button" value="Cancel" />
+          <input type="submit" id="continue" class="mdc-button mdc-button--raised" value="Continue" />
+        </div>
+      </form>
+      <form id="success" class="mdc-form-field mdc-form-field__align-end">
+        <h2>
+          You are successfully signed in!
+        </h2>
+        <input type="button" id="back" class="mdc-button" value="Start over" />
+      </form>
+    </main>
+    <div class="mdc-snackbar">
+      <div class="mdc-snackbar__surface">
+        <div id="snackbar"
+             class="mdc-snackbar__label"
+             role="status"
+             aria-live="polite"></div>
+      </div>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js?render={{recaptchaKey}}"></script>
+    <script src="/client.js" defer></script>
+  </body>
+</html>

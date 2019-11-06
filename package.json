@@ -1,0 +1,17 @@
+{
+  "name": "sms-receiver-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "ssh://git@github.com/konojunya/sms-receiver-api.git",
+  "author": "konojunya <junya03dance@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "twilio": "^4.6.0",
+    "hbs": "^4.0.4",
+    "request": "^2.88.0"
+  }
+}
